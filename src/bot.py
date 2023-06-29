@@ -4,7 +4,9 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage import memory
 
+from tgbot.databases.database import DataBaseHelper
 from tgbot.settings.config import load_config
+from tgbot.settings.consts import DB_NAME
 from tgbot.misc.register_all_services import register_all_services
 
 logger = logging.getLogger(__name__)
@@ -31,6 +33,7 @@ async def main():
     await register_all_services(dp)
 
     try:
+        DataBaseHelper(DB_NAME).create_all_tables
         await dp.start_polling()
     finally:
         await dp.storage.close()
